@@ -8,7 +8,6 @@ import { ProductModal } from './ProductModal';
 import { ArrowUpRight, Plus, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-// Refined luxurious easing curve (slow-paced editorial settling)
 const luxuryEase = [0.22, 1, 0.36, 1] as const;
 
 export function ProductGrid() {
@@ -24,170 +23,84 @@ export function ProductGrid() {
   };
 
   return (
-    <section id="collection" className="py-28 bg-[#0C0D0E] text-white relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header with Subtle Scroll Reveal */}
+    <section id="collection" className="py-28 bg-[#FFFFFF] border-b border-[rgba(23,23,23,0.08)]">
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-10">
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 1.0, ease: luxuryEase }}
-          className="flex flex-col md:flex-row md:items-end justify-between mb-20 pb-6 border-b border-white/10 gap-4"
+          className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
         >
           <div>
-            <div className="text-xs uppercase tracking-[0.26em] text-[#D4AF37] font-mono mb-2">
-              02. The Curated Collection
-            </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-white tracking-tight">
-              Statement Mirrors & Illuminated Sculptures
+            <span className="label-mono mb-2">Curated Collection</span>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#171717] font-light tracking-tight">
+              Illuminated Sculptures
             </h2>
           </div>
-          <div className="text-xs text-neutral-400 font-mono tracking-wider">
-            4 ARCHITECTURAL CREATIONS · ALL SIZES & SPECS DIRECT FROM STUDIO
-          </div>
+          <p className="max-w-md text-[#68645D] text-sm sm:text-base font-light leading-relaxed md:text-right">
+            From laser-etched botanical silhouettes to sculptural titanium coatings, each piece is
+            individually inspected and fabricated in Delhi.
+          </p>
         </motion.div>
 
-        {/* Asymmetric Editorial Layout (2 Staggered Pairs) */}
-        <div className="space-y-28">
-          {/* Pair 1: Product 1 (Wide 7-col) & Product 2 (Focused 5-col) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-            {/* Product 1: Moonlit Palm (7 cols) */}
+        {/* 2-Column Product Grid with Full Original Photo Backgrounds */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+          {PRODUCTS.map((product, index) => (
             <motion.div
-              initial={{ opacity: 0, y: 44, scale: 0.985 }}
+              key={product.id}
+              initial={{ opacity: 0, y: 40, scale: 0.985 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 1.15, ease: luxuryEase }}
-              className="lg:col-span-7 flex flex-col group"
+              viewport={{ once: true, margin: '-70px' }}
+              transition={{
+                duration: 1.1,
+                delay: (index % 2) * 0.18,
+                ease: luxuryEase,
+              }}
+              className="group flex flex-col"
             >
+              {/* Product Visual Container with Full Photo Scene Preservation */}
               <div
-                onClick={() => setSelectedProduct(PRODUCTS[0])}
-                className="cursor-pointer overflow-hidden rounded-xl bg-[#121316] border border-white/10 group-hover:border-[#D4AF37]/50 transition-all duration-500 shadow-2xl"
+                onClick={() => setSelectedProduct(product)}
+                className="cursor-pointer border border-[rgba(23,23,23,0.12)] overflow-hidden rounded-sm group-hover:border-[#B89A62] transition-colors duration-300 shadow-md bg-neutral-900"
               >
                 <ProductVisualizer
-                  product={PRODUCTS[0]}
-                  aspectRatio="pdp"
-                  showControls={true}
-                  className="rounded-b-none"
-                />
-              </div>
-
-              {/* Card Meta Row */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, delay: 0.2, ease: luxuryEase }}
-                className="mt-6 flex flex-col sm:flex-row sm:items-start justify-between gap-4"
-              >
-                <div>
-                  <div className="text-xs font-mono text-[#D4AF37] tracking-[0.2em] mb-1.5">
-                    01 · {PRODUCTS[0].category}
-                  </div>
-                  <h3
-                    onClick={() => setSelectedProduct(PRODUCTS[0])}
-                    className="text-2xl font-serif text-white hover:text-[#D4AF37] cursor-pointer transition-colors duration-300"
-                  >
-                    {PRODUCTS[0].name}
-                  </h3>
-                  <div className="text-xs text-neutral-400 font-mono mt-1.5">
-                    Exact Size: <span className="text-white font-medium">{PRODUCTS[0].size}</span>
-                  </div>
-                </div>
-
-                <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-3">
-                  <div className="text-xl font-mono font-medium text-white">
-                    {PRODUCTS[0].formattedPrice}
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={(e) => handleQuickAdd(PRODUCTS[0], e)}
-                      className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-black bg-white hover:bg-neutral-200 rounded flex items-center gap-1.5 transition-colors duration-200"
-                    >
-                      {addedId === PRODUCTS[0].id ? (
-                        <>
-                          <Check className="w-3.5 h-3.5 text-emerald-600" />
-                          <span>Added</span>
-                        </>
-                      ) : (
-                        <>
-                          <Plus className="w-3.5 h-3.5" />
-                          <span>Add to Cart</span>
-                        </>
-                      )}
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setSelectedProduct(PRODUCTS[0])}
-                      className="p-2 text-neutral-300 hover:text-white border border-white/20 hover:border-white/40 rounded transition-colors"
-                      title="View Full Product Details"
-                    >
-                      <ArrowUpRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* Product 2: S.S 304 Circular Orbit (5 cols) */}
-            <motion.div
-              initial={{ opacity: 0, y: 44, scale: 0.985 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 1.15, delay: 0.22, ease: luxuryEase }}
-              className="lg:col-span-5 flex flex-col group lg:mt-14"
-            >
-              <div
-                onClick={() => setSelectedProduct(PRODUCTS[1])}
-                className="cursor-pointer overflow-hidden rounded-xl bg-[#121316] border border-white/10 group-hover:border-[#D4AF37]/50 transition-all duration-500 shadow-2xl"
-              >
-                <ProductVisualizer
-                  product={PRODUCTS[1]}
+                  product={product}
                   aspectRatio="card"
                   showControls={true}
-                  className="rounded-b-none"
+                  className="w-full rounded-none border-none"
                 />
               </div>
 
-              {/* Card Meta Row */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, delay: 0.35, ease: luxuryEase }}
-                className="mt-6 flex flex-col sm:flex-row sm:items-start justify-between gap-4"
-              >
+              {/* Product Meta Row */}
+              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 pt-4">
                 <div>
-                  <div className="text-xs font-mono text-[#D4AF37] tracking-[0.2em] mb-1.5">
-                    02 · {PRODUCTS[1].category}
-                  </div>
                   <h3
-                    onClick={() => setSelectedProduct(PRODUCTS[1])}
-                    className="text-2xl font-serif text-white hover:text-[#D4AF37] cursor-pointer transition-colors duration-300"
+                    onClick={() => setSelectedProduct(product)}
+                    className="text-2xl font-serif text-[#171717] hover:text-[#B89A62] transition-colors cursor-pointer mb-1 leading-snug"
                   >
-                    {PRODUCTS[1].name}
+                    {product.name}
                   </h3>
-                  <div className="text-xs text-neutral-400 font-mono mt-1.5">
-                    Exact Size: <span className="text-white font-medium">{PRODUCTS[1].size}</span>
-                  </div>
+                  <p className="font-mono text-xs uppercase tracking-wider text-[#68645D]">
+                    {product.size} · {product.finish}
+                  </p>
                 </div>
 
-                <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-3">
-                  <div className="text-xl font-mono font-medium text-[#D4AF37]">
-                    {PRODUCTS[1].formattedPrice}
-                  </div>
+                <div className="flex items-center gap-4 sm:flex-col sm:items-end sm:gap-2">
+                  <span className="font-mono text-xl font-bold text-[#B89A62]">
+                    {product.formattedPrice}
+                  </span>
 
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
-                      onClick={(e) => handleQuickAdd(PRODUCTS[1], e)}
-                      className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-black bg-[#D4AF37] hover:bg-[#E5C358] rounded flex items-center gap-1.5 transition-colors duration-200"
+                      onClick={(e) => handleQuickAdd(product, e)}
+                      className="px-3.5 py-1.5 text-[0.7rem] font-semibold uppercase tracking-wider text-white bg-[#171717] hover:bg-[#B89A62] rounded-sm flex items-center gap-1.5 transition-colors"
                     >
-                      {addedId === PRODUCTS[1].id ? (
+                      {addedId === product.id ? (
                         <>
-                          <Check className="w-3.5 h-3.5 text-black" />
+                          <Check className="w-3.5 h-3.5" />
                           <span>Added</span>
                         </>
                       ) : (
@@ -200,184 +113,21 @@ export function ProductGrid() {
 
                     <button
                       type="button"
-                      onClick={() => setSelectedProduct(PRODUCTS[1])}
-                      className="p-2 text-neutral-300 hover:text-white border border-white/20 hover:border-white/40 rounded transition-colors"
-                      title="View Full Product Details"
+                      onClick={() => setSelectedProduct(product)}
+                      className="p-1.5 text-[#171717] hover:text-[#B89A62] border border-[rgba(23,23,23,0.15)] hover:border-[#B89A62] rounded-sm transition-colors"
+                      title="View Details"
                     >
                       <ArrowUpRight className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
-              </motion.div>
-            </motion.div>
-          </div>
-
-          {/* Pair 2: Inverted Stagger - Product 3 (5 cols) & Product 4 (7 cols) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-            {/* Product 3: Nova Curve (5 cols) */}
-            <motion.div
-              initial={{ opacity: 0, y: 44, scale: 0.985 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 1.15, ease: luxuryEase }}
-              className="lg:col-span-5 flex flex-col group"
-            >
-              <div
-                onClick={() => setSelectedProduct(PRODUCTS[2])}
-                className="cursor-pointer overflow-hidden rounded-xl bg-[#121316] border border-white/10 group-hover:border-[#D4AF37]/50 transition-all duration-500 shadow-2xl"
-              >
-                <ProductVisualizer
-                  product={PRODUCTS[2]}
-                  aspectRatio="card"
-                  showControls={true}
-                  className="rounded-b-none"
-                />
               </div>
-
-              {/* Card Meta Row */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, delay: 0.2, ease: luxuryEase }}
-                className="mt-6 flex flex-col sm:flex-row sm:items-start justify-between gap-4"
-              >
-                <div>
-                  <div className="text-xs font-mono text-[#D4AF37] tracking-[0.2em] mb-1.5">
-                    03 · {PRODUCTS[2].category}
-                  </div>
-                  <h3
-                    onClick={() => setSelectedProduct(PRODUCTS[2])}
-                    className="text-2xl font-serif text-white hover:text-[#D4AF37] cursor-pointer transition-colors duration-300"
-                  >
-                    {PRODUCTS[2].name}
-                  </h3>
-                  <div className="text-xs text-neutral-400 font-mono mt-1.5">
-                    Exact Size: <span className="text-white font-medium">{PRODUCTS[2].size}</span>
-                  </div>
-                </div>
-
-                <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-3">
-                  <div className="text-xl font-mono font-medium text-white">
-                    {PRODUCTS[2].formattedPrice}
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={(e) => handleQuickAdd(PRODUCTS[2], e)}
-                      className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-black bg-white hover:bg-neutral-200 rounded flex items-center gap-1.5 transition-colors duration-200"
-                    >
-                      {addedId === PRODUCTS[2].id ? (
-                        <>
-                          <Check className="w-3.5 h-3.5 text-emerald-600" />
-                          <span>Added</span>
-                        </>
-                      ) : (
-                        <>
-                          <Plus className="w-3.5 h-3.5" />
-                          <span>Add to Cart</span>
-                        </>
-                      )}
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setSelectedProduct(PRODUCTS[2])}
-                      className="p-2 text-neutral-300 hover:text-white border border-white/20 hover:border-white/40 rounded transition-colors"
-                      title="View Full Product Details"
-                    >
-                      <ArrowUpRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
             </motion.div>
-
-            {/* Product 4: Urban Curve Matt Black (7 cols) */}
-            <motion.div
-              initial={{ opacity: 0, y: 44, scale: 0.985 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 1.15, delay: 0.22, ease: luxuryEase }}
-              className="lg:col-span-7 flex flex-col group lg:mt-10"
-            >
-              <div
-                onClick={() => setSelectedProduct(PRODUCTS[3])}
-                className="cursor-pointer overflow-hidden rounded-xl bg-[#121316] border border-white/10 group-hover:border-[#D4AF37]/50 transition-all duration-500 shadow-2xl"
-              >
-                <ProductVisualizer
-                  product={PRODUCTS[3]}
-                  aspectRatio="pdp"
-                  showControls={true}
-                  className="rounded-b-none"
-                />
-              </div>
-
-              {/* Card Meta Row */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, delay: 0.35, ease: luxuryEase }}
-                className="mt-6 flex flex-col sm:flex-row sm:items-start justify-between gap-4"
-              >
-                <div>
-                  <div className="text-xs font-mono text-[#D4AF37] tracking-[0.2em] mb-1.5">
-                    04 · {PRODUCTS[3].category}
-                  </div>
-                  <h3
-                    onClick={() => setSelectedProduct(PRODUCTS[3])}
-                    className="text-2xl font-serif text-white hover:text-[#D4AF37] cursor-pointer transition-colors duration-300"
-                  >
-                    {PRODUCTS[3].name}
-                  </h3>
-                  <div className="text-xs text-neutral-400 font-mono mt-1.5">
-                    Exact Size: <span className="text-white font-medium">{PRODUCTS[3].size}</span>
-                  </div>
-                </div>
-
-                <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-3">
-                  <div className="text-xl font-mono font-medium text-white">
-                    {PRODUCTS[3].formattedPrice}
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={(e) => handleQuickAdd(PRODUCTS[3], e)}
-                      className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-black bg-white hover:bg-neutral-200 rounded flex items-center gap-1.5 transition-colors duration-200"
-                    >
-                      {addedId === PRODUCTS[3].id ? (
-                        <>
-                          <Check className="w-3.5 h-3.5 text-emerald-600" />
-                          <span>Added</span>
-                        </>
-                      ) : (
-                        <>
-                          <Plus className="w-3.5 h-3.5" />
-                          <span>Add to Cart</span>
-                        </>
-                      )}
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setSelectedProduct(PRODUCTS[3])}
-                      className="p-2 text-neutral-300 hover:text-white border border-white/20 hover:border-white/40 rounded transition-colors"
-                      title="View Full Product Details"
-                    >
-                      <ArrowUpRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Quick View / Detail Modal */}
+      {/* Quick View Modal */}
       <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
     </section>
   );

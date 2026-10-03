@@ -13,7 +13,7 @@ import { CartDrawer } from '@/components/CartDrawer';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#0C0D0E] text-white selection:bg-[#D4AF37] selection:text-black antialiased">
+    <div className="min-h-screen bg-[#F7F5F0] text-[#171717] selection:bg-[#B89A62] selection:text-white antialiased">
       {/* Sticky Navigation Bar */}
       <Navbar />
 
@@ -21,19 +21,19 @@ export default function HomePage() {
       <CartDrawer />
 
       <main>
-        {/* 1. Cinematic Hero Section */}
+        {/* 1. Hero Section */}
         <Hero />
 
-        {/* 2. Brand Introduction & Craftsmanship Ethos */}
+        {/* 2. Brand Introduction (Dark Statement Section) */}
         <BrandIntroduction />
 
-        {/* 3. Editorial 4-Product Asymmetric Collection */}
+        {/* 3. Curated Collection (White Card Grid) */}
         <ProductGrid />
 
-        {/* 4. Interactive Triple-Lit LED Technology Demo */}
+        {/* 4. Illumination Engineering / Technology */}
         <TripleLitShowcase />
 
-        {/* 5. Studio Heritage & Material Standards */}
+        {/* 5. Studio Heritage & Craft */}
         <AboutSection />
 
         {/* 6. Direct Contact & Karawal Nagar Studio Details */}

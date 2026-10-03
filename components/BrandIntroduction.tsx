@@ -4,57 +4,48 @@ import React from 'react';
 import { BRAND_INFO } from '@/lib/products';
 import { motion } from 'framer-motion';
 
-// Refined luxurious easing curve (Apple / Architectural Digest slow settling)
 const luxuryEase = [0.22, 1, 0.36, 1] as const;
 
 export function BrandIntroduction() {
   return (
-    <section id="craftsmanship" className="py-28 bg-[#0F1013] text-white border-t border-b border-white/5 relative overflow-hidden">
-      {/* Subtle Ambient Backlight */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[#D4AF37]/[0.03] rounded-full blur-[140px] pointer-events-none" />
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Editorial Section Header with Slow-Paced Staggered Scroll Reveals */}
-        <div className="max-w-3xl mb-20">
-          {/* Eyebrow Label */}
-          <motion.div
+    <section id="craftsmanship" className="py-28 bg-[#171717] text-[#F7F5F0] relative overflow-hidden">
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-10">
+        {/* Centered Editorial Header (from Variation 5) */}
+        <div className="text-center max-w-[800px] mx-auto mb-24">
+          <motion.span
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.9, ease: luxuryEase }}
-            className="flex items-center gap-3 text-xs uppercase tracking-[0.26em] text-[#D4AF37] font-mono mb-4"
+            className="label-mono mb-4 text-[#B89A62]"
           >
-            <span>01. The Architectural Philosophy</span>
-            <span className="w-8 h-[1px] bg-[#D4AF37]/40" />
-          </motion.div>
+            The Architectural Philosophy
+          </motion.span>
 
-          {/* Main Statement Title */}
           <motion.h2
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 1.1, delay: 0.15, ease: luxuryEase }}
-            className="text-3xl sm:text-4xl md:text-5xl font-serif text-white tracking-tight leading-[1.18] [text-wrap:balance]"
+            className="text-3xl sm:text-4xl md:text-5xl font-serif font-light text-[#F7F5F0] leading-[1.18] [text-wrap:balance]"
           >
             Crafted for spaces where light is not merely illumination, but an architectural material.
           </motion.h2>
 
-          {/* Narrative Body Text */}
           <motion.p
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 1.1, delay: 0.3, ease: luxuryEase }}
-            className="mt-6 text-sm sm:text-base text-neutral-400 font-light leading-relaxed max-w-2xl"
+            className="mt-6 text-sm sm:text-base text-[rgba(247,245,240,0.7)] font-light leading-relaxed max-w-xl mx-auto"
           >
-            At {BRAND_INFO.company}, every mirror is conceived as a functional sculpture. We reject
-            fragile plastic housings and generic framing in favor of marine-grade S.S 304 stainless
-            steel, precision PVD metallization, and multi-tone solid-state LED arrays.
+            At {BRAND_INFO.company}, every mirror is conceived as a functional sculpture, engineered with
+            Grade 304 austenitic stainless steel and solid-state LED arrays.
           </motion.p>
         </div>
 
-        {/* 3 Core Ethos Pillars with Cascading Luxurious Reveals */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* 3 Pillars Grid with Variation 5 border-top dividers */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {BRAND_INFO.ethos.map((item, index) => (
             <motion.div
               key={index}
@@ -63,24 +54,24 @@ export function BrandIntroduction() {
               viewport={{ once: true, margin: '-50px' }}
               transition={{
                 duration: 1.05,
-                delay: 0.25 + index * 0.18,
+                delay: 0.2 + index * 0.18,
                 ease: luxuryEase,
               }}
-              className="group p-8 rounded-xl bg-[#14161A]/80 border border-white/10 hover:border-[#D4AF37]/40 transition-colors duration-500 flex flex-col justify-between"
+              className="border-t border-[rgba(247,245,240,0.15)] pt-8 flex flex-col justify-between"
             >
               <div>
-                <div className="text-xs font-mono text-[#D4AF37] tracking-[0.2em] mb-4">
+                <span className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-[#B89A62] block mb-2">
                   PILLAR 0{index + 1}
-                </div>
-                <h3 className="text-xl font-serif text-white mb-3 group-hover:text-white transition-colors">
+                </span>
+                <h3 className="text-2xl font-serif text-[#F7F5F0] mb-4 font-normal">
                   {item.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-light">
+                <p className="text-sm text-[rgba(247,245,240,0.7)] font-light leading-relaxed">
                   {item.desc}
                 </p>
               </div>
 
-              <div className="mt-8 pt-5 border-t border-white/5 flex items-center justify-between text-[11px] text-neutral-500 font-mono tracking-wider">
+              <div className="mt-8 pt-4 border-t border-[rgba(247,245,240,0.06)] flex items-center justify-between text-[10px] font-mono text-[rgba(247,245,240,0.4)] tracking-widest">
                 <span>ORIGIN CREATIVE GLASSES</span>
                 <span>DELHI</span>
               </div>

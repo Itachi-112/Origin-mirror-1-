@@ -46,16 +46,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-[#0C0D0E] text-white flex flex-col justify-between selection:bg-[#D4AF37] selection:text-black">
+    <div className="min-h-screen bg-[#F7F5F0] text-[#171717] flex flex-col justify-between selection:bg-[#B89A62] selection:text-white">
       <Navbar />
       <CartDrawer />
 
-      <main className="flex-1 pt-28 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-6">
+      <main className="flex-1 pt-32 pb-24">
+        <div className="max-w-[1400px] mx-auto px-6 sm:px-10">
+          <div className="mb-8">
             <Link
               href="/#collection"
-              className="text-xs font-mono text-neutral-400 hover:text-[#D4AF37] uppercase tracking-wider flex items-center gap-1.5 transition-colors"
+              className="text-xs font-mono text-[#68645D] hover:text-[#171717] uppercase tracking-wider flex items-center gap-1.5 transition-colors"
             >
               <span>←</span>
               <span>Back to Entire 4-Piece Collection</span>

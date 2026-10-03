@@ -4,85 +4,75 @@ import React from 'react';
 
 interface BrandLogoProps {
   className?: string;
-  variant?: 'light' | 'dark' | 'gold';
+  variant?: 'ink' | 'light' | 'original';
   showSubtitle?: boolean;
 }
 
 export function BrandLogo({
   className = 'h-9',
-  variant = 'light',
+  variant = 'original',
   showSubtitle = true,
 }: BrandLogoProps) {
+  // If original or ink, use the pure black design from logo.jpeg
   const isLight = variant === 'light';
-  const isGold = variant === 'gold';
-
-  const primaryFill = isGold
-    ? '#D4AF37'
-    : isLight
-    ? '#FFFFFF'
-    : '#121316';
-
-  const subtitleFill = isGold
-    ? '#C5A880'
-    : isLight
-    ? '#D4D0C8'
-    : '#4A4D53';
+  const primaryFill = isLight ? '#FFFFFF' : '#111111';
+  const subtitleFill = isLight ? '#E5E5E5' : '#111111';
 
   return (
     <div className={`inline-flex flex-col items-center justify-center select-none ${className}`}>
       <svg
-        viewBox="0 0 320 110"
+        viewBox="0 0 320 120"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="w-full h-full max-h-full object-contain"
-        aria-label="ORIGIN MIRRORS Logo"
+        aria-label="ORIGIN MIRRORS Official Logo"
       >
-        {/* Geometric Trio above the second 'I' (centered at x = 208) */}
-        {/* Circle */}
-        <circle cx="208" cy="11" r="5.5" fill={primaryFill} />
-        {/* Triangle */}
-        <polygon points="208,21 213.5,31 202.5,31" fill={primaryFill} />
-        {/* Rectangle */}
-        <rect x="203" y="35" width="10" height="7.5" rx="0.5" fill={primaryFill} />
+        {/* Geometric Trio Stack directly above the second 'I' (aligned at x = 208) */}
+        {/* 1. Circle */}
+        <circle cx="208" cy="12" r="5.5" fill={primaryFill} />
+        {/* 2. Triangle pointing up */}
+        <polygon points="208,21 213.5,31.5 202.5,31.5" fill={primaryFill} />
+        {/* 3. Rectangle / Square */}
+        <rect x="203" y="36" width="10" height="8" rx="0.5" fill={primaryFill} />
 
-        {/* ORIGIN Letterforms */}
+        {/* ORIGIN Typography (Faithful stencil-inspired geometric letterforms) */}
         <g fill={primaryFill}>
           {/* 'O' */}
           <path
-            d="M 52 47 C 38 47 28 56 28 70 C 28 84 38 93 52 93 C 66 93 76 84 76 70 C 76 56 66 47 52 47 Z M 52 82 C 45 82 40 77 40 70 C 40 63 45 58 52 58 C 59 58 64 63 64 70 C 64 77 59 82 52 82 Z"
+            d="M 52 48 C 37 48 26 57 26 72 C 26 87 37 96 52 96 C 67 96 78 87 78 72 C 78 57 67 48 52 48 Z M 52 84 C 44 84 38 78 38 72 C 38 66 44 60 52 60 C 60 60 66 66 66 72 C 66 78 60 84 52 84 Z"
           />
 
           {/* 'R' */}
           <path
-            d="M 86 48 L 108 48 C 117 48 123 53 123 61 C 123 67 119 72 113 73.5 L 124 93 L 111 93 L 102 75 L 98 75 L 98 93 L 86 93 L 86 48 Z M 98 58 L 98 67 L 107 67 C 111 67 113 65 113 62.5 C 113 60 111 58 107 58 L 98 58 Z"
+            d="M 86 49 L 109 49 C 119 49 125 54 125 63 C 125 69 121 74 114 76 L 126 96 L 112 96 L 102 77 L 98 77 L 98 96 L 86 96 L 86 49 Z M 98 60 L 98 68 L 108 68 C 112 68 114 66 114 64 C 114 62 112 60 108 60 L 98 60 Z"
           />
 
           {/* 'I' (first) */}
-          <rect x="133" y="48" width="11" height="45" rx="0.5" />
+          <rect x="133" y="49" width="11" height="47" rx="0.5" />
 
           {/* 'G' */}
           <path
-            d="M 174 47 C 160 47 150 56 150 70 C 150 84 160 93 174 93 C 187 93 196 85 197 74 L 185 74 C 184 79 180 82 174 82 C 167 82 162 77 162 70 C 162 63 167 58 174 58 C 180 58 184 61 185 66 L 197 66 C 195 55 186 47 174 47 Z"
+            d="M 174 48 C 159 48 149 57 149 72 C 149 87 159 96 174 96 C 188 96 198 87 199 75 L 186 75 C 185 81 180 84 174 84 C 166 84 161 78 161 72 C 161 66 166 60 174 60 C 180 60 185 63 186 69 L 199 69 C 197 56 187 48 174 48 Z"
           />
-          {/* 'G' inner spur */}
-          <rect x="178" y="68" width="19" height="10" />
+          {/* 'G' horizontal spur */}
+          <rect x="178" y="70" width="20" height="11" />
 
-          {/* 'I' (second, directly beneath geometric glyphs) */}
-          <rect x="203" y="48" width="10" height="45" rx="0.5" />
+          {/* 'I' (second, directly beneath the geometric stack) */}
+          <rect x="203" y="49" width="10" height="47" rx="0.5" />
 
           {/* 'N' */}
           <path
-            d="M 223 48 L 234 48 L 253 79 L 253 48 L 264 48 L 264 93 L 253 93 L 234 62 L 234 93 L 223 93 L 223 48 Z"
+            d="M 223 49 L 235 49 L 254 81 L 254 49 L 265 49 L 265 96 L 254 96 L 235 64 L 235 96 L 223 96 L 223 49 Z"
           />
 
-          {/* Registered Trademark ® */}
-          <circle cx="282" cy="53" r="8" stroke={primaryFill} strokeWidth="1.5" fill="none" />
+          {/* Registered Trademark ® directly to the right of 'N' */}
+          <circle cx="283" cy="54" r="8.5" stroke={primaryFill} strokeWidth="1.6" fill="none" />
           <text
-            x="282"
-            y="56.5"
-            fontSize="8.5"
+            x="283"
+            y="57.8"
+            fontSize="9"
             fontWeight="bold"
-            fontFamily="sans-serif"
+            fontFamily="system-ui, -apple-system, sans-serif"
             textAnchor="middle"
             fill={primaryFill}
           >
@@ -90,15 +80,15 @@ export function BrandLogo({
           </text>
         </g>
 
-        {/* MIRRORS Subtitle */}
+        {/* MIRRORS Subtitle - centered, tracked uppercase */}
         {showSubtitle && (
           <text
             x="160"
-            y="108"
-            fontSize="14"
-            fontWeight="600"
-            letterSpacing="7"
-            fontFamily="system-ui, -apple-system, sans-serif"
+            y="114"
+            fontSize="14.5"
+            fontWeight="700"
+            letterSpacing="6.5"
+            fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
             textAnchor="middle"
             fill={subtitleFill}
           >

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useMemo, useSyncExternalStore } from 'react';
 import { Product, PRODUCTS } from './products';
 
 export interface CartItem {
@@ -28,71 +28,114 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 const CART_STORAGE_KEY = 'origin_mirrors_cart_v1';
 
-function getInitialCart(): CartItem[] {
-  if (typeof window === 'undefined') return [];
-  try {
-    const stored = localStorage.getItem(CART_STORAGE_KEY);
-    if (!stored) return [];
-    const parsed = JSON.parse(stored);
-    if (!Array.isArray(parsed)) return [];
-    const validItems: CartItem[] = [];
-    for (const item of parsed) {
-      const product = PRODUCTS.find((p) => p.id === item.productId || p.id === item?.product?.id);
-      if (product && typeof item.quantity === 'number' && item.quantity > 0) {
-        validItems.push({
-          product,
-          quantity: item.quantity,
-          selectedLighting: item.selectedLighting || 'Triple-Lit Multi-Tone',
-        });
-      }
+let listeners: Array<() => void> = [];
+
+function subscribe(callback: () => void) {
+  listeners.push(callback);
+  const handleStorage = (e: StorageEvent) => {
+    if (e.key === CART_STORAGE_KEY) {
+      callback();
     }
-    return validItems;
+  };
+  if (typeof window !== 'undefined') {
+    window.addEventListener('storage', handleStorage);
+  }
+  return () => {
+    listeners = listeners.filter((l) => l !== callback);
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('storage', handleStorage);
+    }
+  };
+}
+
+function notify() {
+  for (const listener of listeners) {
+    listener();
+  }
+}
+
+function getSnapshot(): string {
+  if (typeof window === 'undefined') return '';
+  return localStorage.getItem(CART_STORAGE_KEY) || '';
+}
+
+function getServerSnapshot(): string {
+  return '';
+}
+
+function saveCartToStorage(rawString: string) {
+  try {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(CART_STORAGE_KEY, rawString);
+      notify();
+    }
   } catch {
-    return [];
+    // ignore quota errors
   }
 }
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>(getInitialCart);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Save to local storage whenever items change
-  useEffect(() => {
+  // useSyncExternalStore guarantees SSR & initial client hydration match (both return '')
+  const rawCart = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+
+  const items = useMemo<CartItem[]>(() => {
+    if (!rawCart) return [];
     try {
-      const toStore = items.map((i) => ({
+      const parsed = JSON.parse(rawCart);
+      if (!Array.isArray(parsed)) return [];
+      const validItems: CartItem[] = [];
+      for (const item of parsed) {
+        const product = PRODUCTS.find((p) => p.id === item.productId || p.id === item?.product?.id);
+        if (product && typeof item.quantity === 'number' && item.quantity > 0) {
+          validItems.push({
+            product,
+            quantity: item.quantity,
+            selectedLighting: item.selectedLighting || 'Triple-Lit Multi-Tone',
+          });
+        }
+      }
+      return validItems;
+    } catch {
+      return [];
+    }
+  }, [rawCart]);
+
+  const updateStorage = (updatedItems: CartItem[]) => {
+    const serialized = JSON.stringify(
+      updatedItems.map((i) => ({
         productId: i.product.id,
         quantity: i.quantity,
         selectedLighting: i.selectedLighting,
-      }));
-      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(toStore));
-    } catch {
-      // ignore storage full errors
-    }
-  }, [items]);
+      }))
+    );
+    saveCartToStorage(serialized);
+  };
 
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
   const toggleCart = () => setIsOpen((prev) => !prev);
 
   const addItem = (product: Product, quantity = 1, selectedLighting?: string) => {
-    setItems((prev) => {
-      const existingIndex = prev.findIndex((item) => item.product.id === product.id);
-      if (existingIndex > -1) {
-        const updated = [...prev];
-        updated[existingIndex] = {
-          ...updated[existingIndex],
-          quantity: updated[existingIndex].quantity + quantity,
-          selectedLighting: selectedLighting || updated[existingIndex].selectedLighting,
-        };
-        return updated;
-      }
-      return [...prev, { product, quantity, selectedLighting: selectedLighting || 'Triple-Tone' }];
-    });
+    const existingIndex = items.findIndex((item) => item.product.id === product.id);
+    let updated: CartItem[];
+    if (existingIndex > -1) {
+      updated = [...items];
+      updated[existingIndex] = {
+        ...updated[existingIndex],
+        quantity: updated[existingIndex].quantity + quantity,
+        selectedLighting: selectedLighting || updated[existingIndex].selectedLighting,
+      };
+    } else {
+      updated = [...items, { product, quantity, selectedLighting: selectedLighting || 'Triple-Tone' }];
+    }
+    updateStorage(updated);
     setIsOpen(true);
   };
 
   const removeItem = (productId: string) => {
-    setItems((prev) => prev.filter((item) => item.product.id !== productId));
+    updateStorage(items.filter((item) => item.product.id !== productId));
   };
 
   const updateQuantity = (productId: string, quantity: number) => {
@@ -100,15 +143,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       removeItem(productId);
       return;
     }
-    setItems((prev) =>
-      prev.map((item) =>
+    updateStorage(
+      items.map((item) =>
         item.product.id === productId ? { ...item, quantity } : item
       )
     );
   };
 
   const clearCart = () => {
-    setItems([]);
+    updateStorage([]);
   };
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);

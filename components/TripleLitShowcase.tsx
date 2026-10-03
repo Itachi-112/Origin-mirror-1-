@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Sun, Sparkles, Eye, Shield, Sliders, Zap } from 'lucide-react';
+import { Zap } from 'lucide-react';
 
 export function TripleLitShowcase() {
   const [activeTemp, setActiveTemp] = useState<'3000k' | '4500k' | '6500k'>('4500k');
@@ -10,49 +10,46 @@ export function TripleLitShowcase() {
   const temps = {
     '3000k': {
       title: '3000K Golden Warmth',
-      desc: 'Inviting, restful ambient glow reminiscent of evening candlelight. Optimal for relaxation rituals, evening baths, and architectural mood lighting.',
+      desc: 'Inviting, restful ambient glow reminiscent of evening candlelight. Optimal for relaxation rituals and evening baths.',
       color: '#FFB85A',
       bgGlow: 'rgba(255, 184, 90, 0.25)',
-      mood: 'Evening Ambience',
+      mood: 'EVENING AMBIENCE',
     },
     '4500k': {
-      title: '4500K Pure Natural Neutral',
-      desc: 'Crisp, color-accurate neutral white calibrated to natural morning daylight. Ideal for precision grooming, makeup application, and true skin-tone clarity.',
+      title: '4500K Pure Neutral',
+      desc: 'Crisp, color-accurate neutral white calibrated to natural morning daylight. Ideal for precision grooming and true skin-tone clarity.',
       color: '#FFFFFF',
-      bgGlow: 'rgba(255, 255, 255, 0.25)',
-      mood: 'Vanity & Grooming',
+      bgGlow: 'rgba(255, 255, 255, 0.4)',
+      mood: 'VANITY & GROOMING',
     },
     '6500k': {
       title: '6500K Architectural Daylight',
       desc: 'High-energy, focused clarity that highlights clean architectural lines, marble veining, and tile textures throughout the bath sanctuary.',
       color: '#CBE5FF',
-      bgGlow: 'rgba(203, 229, 255, 0.25)',
-      mood: 'Architectural Daylight',
+      bgGlow: 'rgba(203, 229, 255, 0.3)',
+      mood: 'CRISP CLARITY',
     },
   };
 
   const current = temps[activeTemp];
 
   return (
-    <section id="triple-lit" className="py-24 bg-[#0F1014] text-white border-t border-b border-white/5 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Interactive Technical Control (6 cols) */}
-          <div className="lg:col-span-6 flex flex-col justify-center">
-            <div className="text-xs uppercase tracking-[0.24em] text-[#D4AF37] font-mono mb-2">
-              03. Illumination Engineering
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-serif text-white tracking-tight leading-tight mb-4">
-              Triple-Lit LED Technology with Feather-Touch Dimming
+    <section id="triple-lit" className="py-28 bg-[#F7F5F0] border-b border-[rgba(23,23,23,0.08)]">
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Left Column (5 cols) */}
+          <div className="lg:col-span-5">
+            <span className="label-mono mb-2">Illumination Engineering</span>
+            <h2 className="text-4xl sm:text-5xl font-serif text-[#171717] font-light leading-tight mb-6">
+              Solid-State Ambience Calibration
             </h2>
-            <p className="text-sm text-neutral-400 font-light leading-relaxed mb-8">
+            <p className="text-base text-[#68645D] font-light leading-relaxed mb-10">
               Origin Mirrors integrates triple color temperature arrays with high Color Rendering
-              Index (CRI &gt; 95), eliminating unnatural skin casts and harsh shadows. Switch seamlessly
-              with a single capacitive touch.
+              Index (CRI &gt; 95), calibrated to morning daylight and evening tranquility.
             </p>
 
-            {/* Interactive Mode Selector Tabs */}
-            <div className="space-y-3">
+            {/* 3 Temperature Selector Rows (Matching Variation 5 HTML) */}
+            <div className="space-y-0 divide-y divide-[rgba(23,23,23,0.08)] border-t border-b border-[rgba(23,23,23,0.08)]">
               {(['3000k', '4500k', '6500k'] as const).map((tempKey) => {
                 const item = temps[tempKey];
                 const isSelected = activeTemp === tempKey;
@@ -61,26 +58,34 @@ export function TripleLitShowcase() {
                     key={tempKey}
                     type="button"
                     onClick={() => setActiveTemp(tempKey)}
-                    className={`w-full text-left p-4 rounded-lg border transition-all duration-300 flex items-center justify-between ${
-                      isSelected
-                        ? 'border-[#D4AF37] bg-[#16181D] shadow-[0_0_20px_rgba(212,175,55,0.15)]'
-                        : 'border-white/10 bg-[#121316] hover:border-white/20'
+                    className={`w-full text-left py-5 px-3 flex items-center justify-between transition-colors ${
+                      isSelected ? 'bg-white/60' : 'hover:bg-white/30'
                     }`}
                   >
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span
-                          className="w-2.5 h-2.5 rounded-full"
-                          style={{ backgroundColor: item.color }}
-                        />
-                        <span className="text-sm font-medium text-white">{item.title}</span>
+                    <div className="flex items-center gap-5">
+                      <span
+                        className="w-10 h-10 rounded-full border border-[rgba(23,23,23,0.15)] flex-shrink-0 shadow-sm"
+                        style={{ backgroundColor: item.color }}
+                      />
+                      <div>
+                        <p
+                          className={`font-semibold text-sm ${
+                            isSelected ? 'text-[#B89A62]' : 'text-[#171717]'
+                          }`}
+                        >
+                          {item.title}
+                        </p>
+                        <p className="font-mono text-xs text-[#68645D] tracking-wider mt-0.5">
+                          {item.mood}
+                        </p>
                       </div>
-                      <span className="text-xs text-neutral-400 mt-1 block pl-4.5">{item.mood}</span>
                     </div>
 
                     <span
-                      className={`text-xs font-mono uppercase tracking-wider px-2 py-0.5 rounded ${
-                        isSelected ? 'bg-[#D4AF37]/20 text-[#D4AF37]' : 'text-neutral-500'
+                      className={`font-mono text-xs uppercase tracking-widest px-2.5 py-1 rounded-sm ${
+                        isSelected
+                          ? 'bg-[#B89A62] text-white font-bold'
+                          : 'text-[#68645D] border border-[rgba(23,23,23,0.1)]'
                       }`}
                     >
                       {tempKey.toUpperCase()}
@@ -91,66 +96,34 @@ export function TripleLitShowcase() {
             </div>
           </div>
 
-          {/* Right Column: Dynamic Mirror Glow Simulator (6 cols) */}
-          <div className="lg:col-span-6 flex flex-col items-center justify-center">
-            <div className="relative w-full max-w-[420px] aspect-[3/4] p-8 flex items-center justify-center">
-              {/* Backlit Wall Wash with Animated Color and Blur */}
+          {/* Right Column: Mirror Module Simulator (7 cols) */}
+          <div className="lg:col-span-7 flex items-center justify-center bg-white border border-[rgba(23,23,23,0.08)] p-8 sm:p-12 shadow-sm rounded-sm">
+            <div className="w-full max-w-[480px] aspect-[1.2] bg-[#F0EEEA] border border-[rgba(23,23,23,0.08)] rounded-sm p-8 relative overflow-hidden flex flex-col items-center justify-center text-center shadow-inner">
+              {/* Backlit Glow Animation */}
               <motion.div
-                className="absolute inset-4 rounded-3xl filter blur-3xl pointer-events-none"
+                className="absolute inset-6 rounded-lg filter blur-2xl pointer-events-none"
                 animate={{
                   backgroundColor: current.bgGlow,
                 }}
                 transition={{ duration: 0.4 }}
               />
 
-              {/* Mirror Body with Active Perimeter Glow */}
-              <motion.div
-                className="relative w-full h-full rounded-2xl p-[6px] bg-gradient-to-tr from-neutral-800 to-neutral-700 shadow-2xl overflow-hidden flex flex-col justify-between"
-                animate={{
-                  boxShadow: `0 0 40px ${current.bgGlow}, 0 20px 40px rgba(0,0,0,0.8)`,
-                }}
-                transition={{ duration: 0.4 }}
-              >
-                {/* Diffuser Ribbon */}
-                <motion.div
-                  className="w-full h-full rounded-xl p-3 flex flex-col justify-between"
-                  animate={{
-                    backgroundColor: current.bgGlow,
-                  }}
-                  transition={{ duration: 0.4 }}
-                >
-                  {/* Glass Mirror Center */}
-                  <div className="w-full h-full rounded-lg bg-gradient-to-br from-[#1C2026] via-[#101419] to-[#0A0D10] relative overflow-hidden flex flex-col items-center justify-center p-6 text-center">
-                    {/* Shimmer line */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.05] to-transparent pointer-events-none" />
+              <div className="relative z-10">
+                <span className="label-mono text-[0.6rem] mb-2 text-[#B89A62]">Vanity Module 04</span>
+                <p className="font-serif text-3xl sm:text-4xl text-[#171717] font-light mb-3">
+                  {current.title}
+                </p>
+                <p className="text-xs text-[#68645D] max-w-xs mx-auto leading-relaxed mb-6 font-light">
+                  {current.desc}
+                </p>
 
-                    <div className="z-10">
-                      <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#D4AF37] block mb-1">
-                        Solid State Array
-                      </span>
-                      <div className="text-2xl font-serif text-white mb-2">{current.title}</div>
-                      <p className="text-xs text-neutral-400 max-w-[240px] leading-relaxed">
-                        {current.desc}
-                      </p>
-                    </div>
-
-                    {/* Touch Button Sensor Graphic */}
-                    <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                      <motion.div
-                        className="w-6 h-6 rounded border border-white/60 flex items-center justify-center shadow-lg"
-                        animate={{
-                          borderColor: current.color,
-                        }}
-                      >
-                        <Zap className="w-3 h-3 text-white" />
-                      </motion.div>
-                      <span className="text-[8px] font-mono text-neutral-500 uppercase mt-1">
-                        Capacitive Touch
-                      </span>
-                    </div>
-                  </div>
-                </motion.div>
-              </motion.div>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-[rgba(23,23,23,0.1)] rounded-sm shadow-sm">
+                  <Zap className="w-3 h-3 text-[#B89A62]" />
+                  <span className="font-mono text-[0.65rem] tracking-[0.2em] text-[#B89A62] uppercase font-semibold">
+                    Capacitive Touch
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

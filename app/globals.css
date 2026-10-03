@@ -1,18 +1,106 @@
 @import "tailwindcss";
 
+:root {
+  --bg: #F7F5F0;
+  --bg-alt: #FFFFFF;
+  --ink: #171717;
+  --ink-muted: #68645D;
+  --accent: #B89A62;
+  --border: rgba(23, 23, 23, 0.08);
+  --border-accent: rgba(184, 154, 98, 0.3);
+}
+
 @theme {
   --font-serif: var(--font-serif), "Cormorant Garamond", Georgia, serif;
-  --font-sans: var(--font-sans), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-sans: var(--font-sans), "Inter", -apple-system, sans-serif;
+  --font-mono: var(--font-mono), "Space Mono", monospace;
+  --color-bg: var(--bg);
+  --color-bg-alt: var(--bg-alt);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-accent: var(--accent);
 }
 
 @layer base {
   body {
-    background-color: #0c0d0e;
-    color: #f3f3f6;
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    line-height: 1.1;
   }
 
   ::selection {
-    background-color: #d4af37;
-    color: #000000;
+    background-color: var(--accent);
+    color: #ffffff;
   }
+}
+
+/* Variation 5 Utility Styles */
+.line-decor {
+  width: 40px;
+  height: 1px;
+  background-color: var(--accent);
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 12px;
+}
+
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  display: block;
+}
+
+.btn-primary-var5 {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  border-radius: 2px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  transition: all 0.3s;
+  cursor: pointer;
+  background: var(--ink);
+  color: white;
+  border: 1px solid var(--ink);
+}
+
+.btn-primary-var5:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.btn-outline-var5 {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  border-radius: 2px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  transition: all 0.3s;
+  cursor: pointer;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  background: transparent;
+}
+
+.btn-outline-var5:hover {
+  background: var(--ink);
+  color: white;
 }

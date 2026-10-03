@@ -3,7 +3,7 @@
 import React from 'react';
 import { Product } from '@/lib/products';
 import { ProductDetailView } from './ProductDetailView';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
 interface ProductModalProps {
@@ -23,7 +23,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-black/80 backdrop-blur-md"
+          className="fixed inset-0 bg-[#171717]/60 backdrop-blur-md"
         />
 
         {/* Modal Window */}
@@ -32,13 +32,13 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: 16 }}
           transition={{ duration: 0.25 }}
-          className="relative w-full max-w-5xl bg-[#101216] border border-white/15 rounded-2xl p-6 sm:p-10 shadow-2xl z-10 max-h-[90vh] overflow-y-auto my-auto"
+          className="relative w-full max-w-5xl bg-[#FFFFFF] border border-[rgba(23,23,23,0.08)] rounded-sm p-6 sm:p-10 shadow-2xl z-10 max-h-[90vh] overflow-y-auto my-auto"
         >
           {/* Close Button */}
           <button
             type="button"
             onClick={onClose}
-            className="absolute top-5 right-5 p-2 rounded-full text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 transition-colors z-20"
+            className="absolute top-5 right-5 p-2 rounded-sm text-[#68645D] hover:text-[#171717] bg-[#F7F5F0] hover:bg-neutral-200 transition-colors z-20"
             aria-label="Close product view"
           >
             <X className="w-5 h-5" />
